@@ -1,0 +1,51 @@
+1. Build the app(any) and test in local
+2. Start dockerhub and docker-desktop
+3. Prepare the dockerfile in the project
+
+4. Create the Docker image and test it:
+    >> docker build -t flask-k8s-minikube-demo:latest .
+    >> docker images
+    >> docker run -p 5000:5000 flask-k8s-minikube-demo:latest
+
+5. Create deployment.yaml
+6. Install Minikube
+
+7. Run on Minikube
+    >> minikube start / minikube start --embed-certs
+    >> minikube status
+
+    >> kubectl get all -A
+    >> kubectl get pods -A
+    >> kubectl get nodes -A
+
+    - How to add new nodes?  >> minikube start --nodes=2 / minikube start --nodes=2 --embed-certs
+
+    >> minikube image list
+    >> docker images
+    >> minikube image load flask-k8s-minikube-demo:latest
+
+    >> kubectl apply -f deployment.yaml
+    >> # kubectl delete deployment flask-k8s-minikube-demo
+
+    >> kubectl get pods -A
+    >> kubectl get nodes -A
+
+    >> kubectl delete pod <pod_name/id>
+    >> kubectl get pods -A
+
+    >> minikube service flask-k8s-minikube-demo
+    >> minikube dashboard
+
+    >> kubectl get endpoints
+    >> kubectl get service
+
+    ** Load Balancing **
+    >> kubectl get pods
+    >> kubectl logs -f <pod_id>
+    - Postman -> Collection -> Runs -> Performance -> Run Performance Test -> Performance -> (Fixed -> 10Users -> 1min)
+
+    >> minikube stop
+
+8. Push images to dockerhub
+    >> docker tag flask-k8s-minikube-demo:latest dcap27/flask-k8s-minikube-demo:latest
+    >> docker push dcap27/flask-k8s-minikube-demo:latest

@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-k8s-minikube-demo
+spec:
+  replicas: 2 # Number of pods
+  selector:
+    matchLabels:
+      app: flask-k8s-minikube-demo
+  template:
+    metadata:
+      labels:
+        app: flask-k8s-minikube-demo
+    spec:
+      containers:
+        - name: flask-k8s-minikube-demo
+          # image: dcap/flask-k8s-minikube-demo:latest
+          image: flask-k8s-minikube-demo:latest
+          imagePullPolicy: Never # Tell Kubernetes not to pull from a registry
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "200m"
+          ports:
+            - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-k8s-minikube-demo
+spec:
+  selector:
+    app: flask-k8s-minikube-demo
+  ports:
+    - port: 8080
+      targetPort: 5000
